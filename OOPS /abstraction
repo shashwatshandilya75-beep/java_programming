@@ -1,0 +1,23 @@
+abstract class GraphicObject {
+    abstract void draw();
+    
+    public void resize() {
+        System.out.println("Resizing the object...");
+    }
+}
+
+class Circle extends GraphicObject {
+    @Override
+    void draw() {
+        System.out.println("Drawing a Circle using radius.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        
+        GraphicObject myCircle = new Circle();
+        myCircle.draw();   
+        myCircle.resize(); 
+    }
+}
