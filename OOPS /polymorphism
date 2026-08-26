@@ -1,0 +1,32 @@
+class Animal {
+    public void makeSound() {
+        System.out.println("The animal makes a sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    public void makeSound() {
+        System.out.println("The dog barks: Woof Woof");
+    }
+}
+
+class Calculator {
+    public int add(int a, int b) {
+        return a + b;
+    }
+    
+    public int add(int a, int b, int c) {
+        return a + b + c;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal myDog = new Dog(); 
+        myDog.makeSound(); 
+        Calculator calc = new Calculator();
+        System.out.println("Sum of 2 numbers: " + calc.add(5, 10));
+        System.out.println("Sum of 3 numbers: " + calc.add(5, 10, 15));
+    }
+}
