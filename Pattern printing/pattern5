@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class pattern5 {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter value n : ");
+        int n = sc.nextInt();
+
+        int row = 0;
+        int star = 1;
+        int space =n-1;
+
+        while (row < n) {
+
+            int col = 0;
+    
+
+            while (col < space) {
+                
+                System.out.print(" ");
+                col++;
+       
+            }
+
+             int j = 0;
+            while(j<star){
+                System.out.print("* ");
+                j++;
+            }
+
+    
+            System.out.println(); 
+            row++;
+            star++;
+            space--;
+        }
+
+        sc.close();
+
+    }
+}
