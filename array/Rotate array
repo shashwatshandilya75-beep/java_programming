@@ -1,0 +1,23 @@
+class Solution {
+public:
+    void reversearr(vector<int>& nums,int a, int b) {
+
+        while (a < b) {
+            int temp = nums[a];
+            nums[a] = nums[b];
+            nums[b] = temp;
+            
+            a++;
+            b--;
+        }
+    }
+
+    void rotate(vector<int>& nums, int k) {
+        int n = nums.size();
+        k = k % n; 
+        
+        reversearr(nums, 0, n - 1);
+        reversearr(nums, 0, k - 1);
+        reversearr(nums, k, n - 1);
+    }
+};
