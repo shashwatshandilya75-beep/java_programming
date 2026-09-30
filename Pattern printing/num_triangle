@@ -1,0 +1,31 @@
+public class num_triangle  {
+    public static void main(String[] args) {
+        int row = 10;
+        int i = 0;
+
+        while (i < row) {
+            int space = 0;
+            while (space < (row - 1 - i)) {
+                System.out.print("  ");
+                space++;
+            }
+
+            int j = 10 - i;
+            while (j < 10) {
+                System.out.print(j + " ");
+                j++;
+            }
+
+            System.out.print("0");
+
+            int k = 9;
+            while (k >= 10 - i) {
+                System.out.print(" " + k);
+                k--;
+            }
+
+            System.out.println();
+            i++;
+        }
+    }
+}
