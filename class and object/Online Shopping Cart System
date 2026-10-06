@@ -1,0 +1,117 @@
+import java.util.Scanner;
+
+// Class representing a Product item
+class Product {
+    private String itemID;
+    private String name;
+    private double unitPrice;
+    private int stockQuantity;
+
+    public Product(String itemID, String name, double unitPrice, int stockQuantity) {
+        this.itemID = itemID;
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.stockQuantity = stockQuantity;
+    }
+
+    public String getName() { return name; }
+    public double getUnitPrice() { return unitPrice; }
+    public int getStockQuantity() { return stockQuantity; }
+
+    // Method to check inventory and reduce stock
+    public boolean absoluteDeductStock(int qty) {
+        if (qty <= stockQuantity) {
+            stockQuantity -= qty;
+            return true;
+        }
+        return false;
+    }
+}
+
+// Class representing the user's Shopping Cart
+class ShoppingCart {
+    private Product cartItem;
+    private int selectedQuantity;
+    private final double TAX_RATE = 0.08; // 8% sales tax
+
+    // Method to tie a product object to the cart
+    public void addItem(Product product, int qty) {
+        if (product.absoluteDeductStock(qty)) {
+            this.cartItem = product;
+            this.selectedQuantity += qty;
+            System.out.println(qty + " unit(s) of " + product.getName() + " added to your cart.");
+        } else {
+            System.out.println("Failed! Insufficient stock available. Only " + product.getStockQuantity() + " left.");
+        }
+    }
+
+    // Method to print dynamic bill details
+    public void generateInvoice() {
+        if (cartItem == null || selectedQuantity == 0) {
+            System.out.println("Your cart is empty. Nothing to bill!");
+            return;
+        }
+        double subtotal = cartItem.getUnitPrice() * selectedQuantity;
+        double taxAmount = subtotal * TAX_RATE;
+        double overallTotal = subtotal + taxAmount;
+
+        System.out.println("\n********* INVOICE RECEIPT *********");
+        System.out.println("Product Ordered: " + cartItem.getName());
+        System.out.println("Quantity Total:  " + selectedQuantity);
+        System.out.println("Price per Unit:  $" + cartItem.getUnitPrice());
+        System.out.println("-----------------------------------");
+        System.out.printf("Subtotal:        $%.2f\n", subtotal);
+        System.out.printf("Tax (8%%):        $%.2f\n", taxAmount);
+        System.out.printf("Grand Total:     $%.2f\n", overallTotal);
+        System.out.println("***********************************");
+    }
+}
+
+// Main class to orchestrate the runtime flow
+public class ECommerceStore {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Simulating store inventory with a standard catalog product
+        Product catalogItem = new Product("P101", "Wireless Gaming Mouse", 49.99, 15);
+        ShoppingCart userCart = new ShoppingCart();
+
+        System.out.println("Welcome to the Tech Gadget Store!");
+        int loopChoice;
+
+        do {
+            System.out.println("\n--- E-Store Menu ---");
+            System.out.println("1. View Available Store Item");
+            System.out.println("2. Add Item to Shopping Cart");
+            System.out.println("3. Proceed to Checkout & Print Invoice");
+            System.out.println("4. Exit App");
+            System.out.print("Action: ");
+            loopChoice = sc.nextInt();
+
+            switch (loopChoice) {
+                case 1:
+                    System.out.println("\n--- Current Inventory ---");
+                    System.out.println("Item: " + catalogItem.getName());
+                    System.out.println("Price: $" + catalogItem.getUnitPrice());
+                    System.out.println("Available Stock Units: " + catalogItem.getStockQuantity());
+                    break;
+                case 2:
+                    System.out.print("Enter quantity to add to cart: ");
+                    int purchaseQty = sc.nextInt();
+                    userCart.addItem(catalogItem, purchaseQty);
+                    break;
+                case 3:
+                    userCart.generateInvoice();
+                    loopChoice = 4; // Terminate store interaction after billing
+                    break;
+                case 4:
+                    System.out.println("Thank you for visiting our marketplace.");
+                    break;
+                default:
+                    System.out.println("Invalid option selected.");
+            }
+        } while (loopChoice != 4);
+
+        sc.close();
+    }
+}
