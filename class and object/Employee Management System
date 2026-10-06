@@ -1,0 +1,108 @@
+import java.util.Scanner;
+
+// Class representing an individual Employee
+class Employee {
+    private int id;
+    private String name;
+    private String department;
+    private double baseSalary;
+    private double performanceBonus;
+
+    // Constructor to initialize Employee details
+    public Employee(int id, String name, String department, double baseSalary) {
+        this.id = id;
+        this.name = name;
+        this.department = department;
+        this.baseSalary = baseSalary;
+        this.performanceBonus = 0.0;
+    }
+
+    // Method to update performance bonus
+    public void addBonus(double bonusAmount) {
+        if (bonusAmount >= 0) {
+            this.performanceBonus += bonusAmount;
+            System.out.println("Bonus of $" + bonusAmount + " added successfully.");
+        } else {
+            System.out.println("Invalid bonus amount.");
+        }
+    }
+
+    // Method to calculate net total salary
+    public double calculateTotalSalary() {
+        return this.baseSalary + this.performanceBonus;
+    }
+
+    // Method to change employee's department
+    public void transferDepartment(String newDept) {
+        this.department = newDept;
+        System.out.println(name + " has been transferred to " + newDept + ".");
+    }
+
+    // Method to display full profile
+    public void displayProfile() {
+        System.out.println("\n===== EMPLOYEE PROFILE =====");
+        System.out.println("ID:         " + id);
+        System.out.println("Name:       " + name);
+        System.out.println("Department: " + department);
+        System.out.println("Base Pay:   $" + baseSalary);
+        System.out.println("Bonus Pay:  $" + performanceBonus);
+        System.out.println("Net Salary: $" + calculateTotalSalary());
+        System.out.println("============================");
+    }
+}
+
+// Main operational class
+public class EmployeeManagement {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("--- Register New Employee ---");
+        System.out.print("Enter ID: ");
+        int id = scan.nextInt();
+        scan.nextLine(); // Clear scanner buffer
+        System.out.print("Enter Name: ");
+        String name = scan.nextLine();
+        System.out.print("Enter Department: ");
+        String dept = scan.nextLine();
+        System.out.print("Enter Base Salary: ");
+        double salary = scan.nextDouble();
+
+        // Creating the Employee Object
+        Employee emp = new Employee(id, name, dept, salary);
+
+        int choice;
+        do {
+            System.out.println("\n--- Employee Management Menu ---");
+            System.out.println("1. View Profile Summary");
+            System.out.println("2. Reward Performance Bonus");
+            System.out.println("3. Transfer to New Department");
+            System.out.println("4. Exit System");
+            System.out.print("Select choice: ");
+            choice = scan.nextInt();
+            scan.nextLine(); // Clear buffer
+
+            switch (choice) {
+                case 1:
+                    emp.displayProfile();
+                    break;
+                case 2:
+                    System.out.print("Enter bonus reward amount: ");
+                    double bonus = scan.nextDouble();
+                    emp.addBonus(bonus);
+                    break;
+                case 3:
+                    System.out.print("Enter target department: ");
+                    String newDept = scan.nextLine();
+                    emp.transferDepartment(newDept);
+                    break;
+                case 4:
+                    System.out.println("Exiting management portal. Data saved.");
+                    break;
+                default:
+                    System.out.println("Invalid selection. Try again.");
+            }
+        } while (choice != 4);
+
+        scan.close();
+    }
+}
